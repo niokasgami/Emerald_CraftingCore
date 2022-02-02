@@ -8,6 +8,6 @@
         "strictNullChecks": true,
         "baseUrl": "src"
     },
-    "include": ["src/**/*", "spec/**/*"],
+    "include": ["./src/**/*.ts", "./libs/**/*.d.ts"],
     "exclude": ["node_modules"]
 }
