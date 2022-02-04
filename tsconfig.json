@@ -2,6 +2,7 @@
     "compilerOptions": {
       "esModuleInterop": true,
       "moduleResolution": "Node",
+      "noImplicitOverride": true,
       "target": "Es6",
       "lib": [
         "ES5",
