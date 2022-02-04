@@ -1,12 +1,17 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
-        "target": "ES5",
-        "lib": ["ES5", "ES6", "DOM"],
-        "downlevelIteration": true,
-        "removeComments": true,
-        "strictNullChecks": true,
-        "baseUrl": "src"
+      "esModuleInterop": true,
+      "moduleResolution": "Node",
+      "target": "Es6",
+      "lib": [
+        "ES5",
+        "ES6",
+        "DOM"
+      ],
+      "downlevelIteration": true,
+      "removeComments": true,
+      "strictNullChecks": true,
+      "baseUrl": "src"
     },
     "include": ["./src/**/*.ts", "./libs/**/*.d.ts"],
     "exclude": ["node_modules"]

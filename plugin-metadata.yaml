@@ -1,8 +1,121 @@
 target: MZ
-author: Comuns
-description: Typescript plugin archetype
-help: |-  
-    Typescript Plugin Archetype.
+author: Nio Kasgami
+description: The gear engine plugin who handle the core system for crafting
+help: |-
+  Typescript Plugin Archetype.
+  
+  This is a plugin archetype, it does not provide any functionality, only a
+  template for other plugins.
 
-    This is a plugin archetype, it does not provide any functionality, only a
-    template for other plugins.
+
+params:
+  - name: recipes
+    text: Crafting recipes
+    description: the crafting recipe inventory
+    struct: craftingRecipe
+    type: array
+
+structs:
+  - name: craftingRecipe
+    params:
+      - name: conditions
+        text: recipe conditions
+        description: the ingredients for an recipes
+        struct: craftingCondition
+        type: array
+
+      - name: results
+        text: crafting results
+        description: the list of crafting results
+        struct: craftingResult
+        type: array
+
+  - name: headerStruct
+    params:
+      - name: name
+        text: name
+        description: the recipe name
+        type: text
+
+      - name: icondIndex
+        text: icon index
+        description: the recipe icon
+        type: number
+
+      - name: description
+        text: description
+        description: the recipe description
+        type: text
+
+      - name: type
+        text: recipe type
+        description: the recipe type
+        type: select
+        options:
+          - text: ALL
+            value: ALL
+          - text: ITEM
+            value: ITEM
+          - text: ARMOR
+            value: ARMOR
+          - text: WEAPON
+            value: WEAPON
+
+  - name: craftingCondition
+    params:
+      - name: id
+        text: id
+        description: the condition id
+        type: number
+
+      - name: type
+        text: recipe type
+        description: the recipe type
+        type: select
+        options:
+          - text: ALL
+            value: ALL
+          - text: ITEM
+            value: ITEM
+          - text: ARMOR
+            value: ARMOR
+          - text: WEAPON
+            value: WEAPON
+
+      - name: amount
+        text: amount
+        description: the number of ingredient required
+        type: number
+
+  - name: craftingResult
+    params:
+      - name: id
+        text: id
+        description: the result id
+        type: number
+
+      - name: type
+        text: result type
+        description: the result type
+        type: select
+        options:
+          - text: ALL
+            value: ALL
+          - text: ITEM
+            value: ITEM
+          - text: ARMOR
+            value: ARMOR
+          - text: WEAPON
+            value: WEAPON
+
+      - name: amount
+        text: amount
+        description: the number of ingredient required
+        type: number
+
+
+
+     
+
+
+      

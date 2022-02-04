@@ -27,7 +27,10 @@ export default [
                             preamble: header
                         }
                     })
-                ]
+                ],
+                globals: {
+                    Gem: 'Gem'
+                }
             },
             {
                 file: `${pkg.testProjectDir || `${__dirname}/dist`}/js/plugins/${pkg.name}.debug.js`,
@@ -40,7 +43,8 @@ export default [
         plugins: [
             typescript(),
             externalGlobals({
-                "rmmz": "window"
+                "rmmz": "window",
+                "gemstone": "Gem"
             })
         ]
 	}

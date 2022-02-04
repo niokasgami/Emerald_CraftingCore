@@ -1,0 +1,478 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/comuns-rpgmaker/plugin-metadata/master/schema/plugin-metadata.json",
+  "title": "RMMZPluginMetadata",
+  "description": "RPG Maker MZ plugin metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "target": {
+      "type": "string",
+      "const": "MZ"
+    },
+    "description": {
+      "description": "A short description of what the plugin does",
+      "$ref": "#/definitions/localizedText"
+    },
+    "author": {
+      "description": "Name or nickname of the author of the plugin",
+      "type": "string"
+    },
+    "url": {
+      "description": "An URL where the plugin can be found. Useful for updates",
+      "type": "string",
+      "format": "uri"
+    },
+    "languages": {
+      "description": "List of languages the metadata for this plugin supports",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "help": {
+      "description": "Plugin help, describes usage and explains features in more detail",
+      "$ref": "#/definitions/localizedText"
+    },
+    "base": {
+      "description": "List of base plugins that this plugin depends on",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "before": {
+      "description": "List of plugins this plugin should come before on the plugin manager",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "after": {
+      "description": "List of plugins this plugin should come after on the plugin manager",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "params": {
+      "description": "Plugin parameter definitions",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/parameter"
+      }
+    },
+    "commands": {
+      "description": "Plugin command definitions",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/command"
+      }
+    },
+    "structs": {
+      "description": "Plugin struct definitions",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/struct"
+      }
+    }
+  },
+  "required": [
+    "target",
+    "description",
+    "author",
+    "help"
+  ],
+  "definitions": {
+    "basicParameterType": {
+      "$comment": "Type for a parameter with no additional options",
+      "title": "BasicParamType",
+      "type": "string",
+      "enum": [
+        "text",
+        "note",
+        "file",
+        "actor",
+        "class",
+        "skill",
+        "item",
+        "weapon",
+        "armor",
+        "enemy",
+        "troop",
+        "state",
+        "tileset",
+        "common_event",
+        "switch",
+        "variable"
+      ]
+    },
+    "structType": {
+      "title": "StructType",
+      "type": "object",
+      "properties": {
+        "struct": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "struct"
+      ]
+    },
+    "extendedParameterType": {
+      "title": "ParamType",
+      "$comment": "All parameter types, including those with additional options",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/basicParameterType"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "number",
+            "file",
+            "animation",
+            "boolean",
+            "select",
+            "combo"
+          ]
+        }
+      ]
+    },
+    "parameterType": {
+      "title": "ParamType",
+      "$comment": "All parameter types, including those with additional options",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/extendedParameterType"
+        },
+        {
+          "$ref": "#/definitions/structType"
+        }
+      ]
+    },
+    "localizedText": {
+      "title": "LocalizedText",
+      "$comment": "Either just a default text or a map with localized texts",
+      "type": [
+        "string",
+        "object"
+      ],
+      "properties": {
+        "default": {
+          "description": "Text for the default language",
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "description": "Text for an specific language",
+        "type": "string"
+      },
+      "required": [
+        "default"
+      ]
+    },
+    "parameter": {
+      "title": "Param",
+      "description": "A plugin parameter",
+      "allOf": [
+        {
+          "title": "ParamBase",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Parameter name, used internally by the plugin",
+              "type": "string"
+            },
+            "description": {
+              "description": "Parameter description, will be shown in the editor",
+              "$ref": "#/definitions/localizedText"
+            },
+            "children": {
+              "description": "List of child parameters",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/parameter"
+              }
+            },
+            "default": {
+              "description": "Default value for this parameter"
+            },
+            "type": {
+              "description": "Parameter type"
+            },
+            "text": {
+              "description": "Text to be shown in the editor for this parameter",
+              "$ref": "#/definitions/localizedText"
+            }
+          },
+          "required": [
+            "name",
+            "text",
+            "description"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "title": "BasicParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "$ref": "#/definitions/basicParameterType"
+                }
+              }
+            },
+            {
+              "title": "NumberParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "number"
+                },
+                "min": {
+                  "description": "Minimum value",
+                  "type": "number"
+                },
+                "max": {
+                  "description": "Maximum value",
+                  "type": "number"
+                },
+                "decimals": {
+                  "description": "Floating point precision. If ommited, the number must be an integer.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "title": "FileParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "file"
+                },
+                "dir": {
+                  "description": "Base directory for the file picker",
+                  "type": "string",
+                  "format": "uri-reference"
+                },
+                "require": {
+                  "description": "Whether to include the file on deployment",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "title": "AnimationParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "animation"
+                },
+                "require": {
+                  "description": "Whether to include the file on deployment",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "title": "BooleanParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "boolean"
+                },
+                "on": {
+                  "description": "Label for the true option",
+                  "$ref": "#/definitions/localizedText"
+                },
+                "off": {
+                  "description": "Label for the false option",
+                  "$ref": "#/definitions/localizedText"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "title": "SelectParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "select"
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": [
+                      "string",
+                      "object"
+                    ],
+                    "properties": {
+                      "text": {
+                        "description": "Name of the option to be shown in the editor",
+                        "$ref": "#/definitions/localizedText"
+                      },
+                      "value": {
+                        "description": "Option value to be used internally by the plugin",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "options"
+              ]
+            },
+            {
+              "title": "ComboParam",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "combo"
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/localizedText"
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "options"
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "title": "ArrayParam",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "array"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "$ref": "#/definitions/extendedParameterType"
+                        }
+                      },
+                      "required": [
+                        "items"
+                      ]
+                    },
+                    {
+                      "$ref": "#/definitions/structType"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "StructParam",
+              "$ref": "#/definitions/structType"
+            }
+          ]
+        }
+      ]
+    },
+    "struct": {
+      "title": "Struct",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/parameter"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "params"
+      ]
+    },
+    "command": {
+      "title": "Command",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Command name to be used internally be the plugin",
+          "type": "string"
+        },
+        "text": {
+          "description": "Command label to be shown in the editor",
+          "$ref": "#/definitions/localizedText"
+        },
+        "description": {
+          "description": "Command description to be shown in the editor",
+          "$ref": "#/definitions/localizedText"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/parameter"
+              },
+              {
+                "not": {
+                  "type": "object",
+                  "properties": {
+                    "children": {}
+                  },
+                  "required": [
+                    "children"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "text",
+        "description"
+      ]
+    }
+  }
+}

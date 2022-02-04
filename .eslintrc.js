@@ -9,5 +9,6 @@ module.exports = {
     ],
     rules: {
         "brace-style": ["error", "allman", { "allowSingleLine": true }]
+
     }
 };
