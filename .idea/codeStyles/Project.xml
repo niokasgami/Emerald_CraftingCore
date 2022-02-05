@@ -1,0 +1,24 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <JSCodeStyleSettings version="0">
+      <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
+    </JSCodeStyleSettings>
+    <TypeScriptCodeStyleSettings version="0">
+      <option name="JSDOC_INCLUDE_TYPES" value="true" />
+      <option name="USE_PUBLIC_MODIFIER" value="true" />
+      <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
+    </TypeScriptCodeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+      <option name="BRACE_STYLE" value="2" />
+      <option name="CLASS_BRACE_STYLE" value="2" />
+      <option name="METHOD_BRACE_STYLE" value="2" />
+      <option name="ELSE_ON_NEW_LINE" value="true" />
+    </codeStyleSettings>
+    <codeStyleSettings language="TypeScript">
+      <option name="BRACE_STYLE" value="2" />
+      <option name="CLASS_BRACE_STYLE" value="2" />
+      <option name="METHOD_BRACE_STYLE" value="2" />
+      <option name="ELSE_ON_NEW_LINE" value="true" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>

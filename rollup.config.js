@@ -25,7 +25,8 @@ export default [
                         format: {
                             comments: false,
                             preamble: header
-                        }
+                        },
+                        mangle: false
                     })
                 ],
                 globals: {

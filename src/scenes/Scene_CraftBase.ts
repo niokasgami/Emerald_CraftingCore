@@ -12,14 +12,14 @@ abstract class Scene_CraftBase extends Scene_MenuBase
         super();
     }
 
-    public override initialize()
+    public initialize()
     {
         super.initialize();
         this._crafting = new Game_Crafting();
 
     }
 
-    public override create()
+    public create()
     {
         super.create();
     }
@@ -33,6 +33,12 @@ abstract class Scene_CraftBase extends Scene_MenuBase
      * the method that is called while the results.
      */
     public abstract result(): void;
+
+    /**
+     * the current active recipe id
+     * @returns {number}
+     */
+    public abstract id(): number;
 }
 
 export {Scene_CraftBase}
