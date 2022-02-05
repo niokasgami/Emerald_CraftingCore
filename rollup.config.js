@@ -23,9 +23,10 @@ export default [
                 plugins: [
                     terser({
                         format: {
-                            comments: false,
+                            comments: "all",
                             preamble: header
                         },
+                        compress: false,
                         mangle: false
                     })
                 ],

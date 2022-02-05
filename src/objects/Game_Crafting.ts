@@ -129,13 +129,13 @@ class Game_Crafting
     }
 
     /**
-     * check wheter a recipe can be crafted.
+     * check whether a recipe can be crafted.
      * when creating a new child class, if you have custom conditions
      * you can override this function and implement your own.
      * @param {number} id - the recipe index
      * @returns {boolean}
      */
-    public canCraft(id: number): boolean
+    public canCraft(id: number, ...args): boolean
     {
         const {conditions} = this._recipes[id];
         return conditions.every((condition) =>
@@ -182,7 +182,7 @@ class Game_Crafting
      * when extending the class for custom crafting, overriding this function is advised
      * @param {number} id - the recipe index
      */
-    public onCraft(id: number): void
+    public onCraft(id: number, ...args): void
     {
         const {conditions} = this._recipes[id];
         for (let i = 0; i < conditions.length; i++)
@@ -198,7 +198,7 @@ class Game_Crafting
      * when extending this class for custom crafting, overriding this function is advised.
      * @param {number} id - the recipe index
      */
-    public onResults(id: number): void
+    public onResults(id: number, ...args): void
     {
         const {results} = this._recipes[id];
         for (let i = 0; i < results.length; i++)
@@ -213,7 +213,7 @@ class Game_Crafting
      * The function called when the crafting is done
      * when extending this class for custom crafting, overriding this function is advised.
      */
-    public onEndCrafting(): void
+    public onEndCrafting(...args): void
     {
         console.log("crafting done!");
     }
@@ -230,13 +230,10 @@ class Game_Crafting
         {
             case ItemType.ITEM:
                 return $dataItems[id];
-                break;
             case ItemType.ARMOR:
                 return $dataArmors[id];
-                break;
             case ItemType.WEAPON:
                 return $dataArmors[id];
-                break;
             default:
                 throw new Error("no such item in the database!");
         }
