@@ -10,7 +10,7 @@
       ],
       "downlevelIteration": true,
       "removeComments": true,
-      "strictNullChecks": true,
+      "strictNullChecks": false,
       "baseUrl": "src"
     },
     "include": ["./src/**/*.ts", "./libs/**/*.d.ts"],

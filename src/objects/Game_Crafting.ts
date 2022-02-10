@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {Config, CraftingConditions, CraftingRecipe, CraftingResults, ItemType} from "../core";
+import {Config, CraftingConditions, CraftingRecipe, CraftingResults, ItemType, RecipeBookData} from "../core";
 import {$dataArmors, $dataItems, $gameParty, RPG} from "rmmz";
 
 type Inventory = RPG.DataItem[] | RPG.DataArmor[] | RPG.DataWeapon[];
@@ -13,8 +13,25 @@ type ItemComponent = RPG.DataItem | RPG.DataArmor | RPG.DataWeapon;
  */
 class Game_Crafting
 {
-
+    /**
+     * all the recipes in the games
+     * it doesn't split the recipes in their respective categories
+     * @type {CraftingRecipe[]}
+     * @protected
+     */
     protected _recipes: CraftingRecipe[];
+
+    /**
+     * the variable that split and separate all the recipe by type
+     * It's used for map the recipes in different category.
+     * @type {RecipeBookData}
+     * @protected
+     */
+    protected readonly _recipeBookData: RecipeBookData = {
+        items: [],
+        weapons: [],
+        armors: []
+    }
 
     constructor()
     {
@@ -35,6 +52,22 @@ class Game_Crafting
     public buildRecipesList()
     {
         this._recipes = Config.PARAMS.recipes;
+
+        for (const recipe of this._recipes)
+        {
+            const {type} = recipe.header;
+            switch (type)
+            {
+                case ItemType.ITEM:
+                    this._recipeBookData.items.push(recipe);
+                    break;
+                case ItemType.WEAPON:
+                    this._recipeBookData.weapons.push(recipe);
+                    break;
+                case ItemType.ARMOR:
+                    this._recipeBookData.armors.push(recipe);
+            }
+        }
     }
 
     /**
@@ -47,6 +80,15 @@ class Game_Crafting
     }
 
     /**
+     * return the whole unfiltered list
+     * @returns {CraftingRecipe[]}
+     */
+    public recipes(): CraftingRecipe[]
+    {
+        return this._recipes;
+    }
+
+    /**
      * return the specified crafting recipe
      * @param {number} id - the recipe index
      * @returns {CraftingRecipe}
@@ -54,6 +96,33 @@ class Game_Crafting
     public recipe(id: number): CraftingRecipe
     {
         return this._recipes[id];
+    }
+
+    /**
+     * return a filtered list recipe 'book' object
+     * @returns {RecipeBookData}
+     */
+    public recipeBook(): RecipeBookData
+    {
+        return this._recipeBookData;
+    }
+
+    /**
+     * return a specific category of the recipe book
+     * @param {ItemType} type
+     * @returns {CraftingRecipe[]}
+     */
+    public recipeBookByIndex(type: ItemType): CraftingRecipe[]
+    {
+        switch (type)
+        {
+            case ItemType.ITEM:
+                return this._recipeBookData.items;
+            case ItemType.WEAPON:
+                return this._recipeBookData.weapons;
+            case ItemType.ARMOR:
+                return this._recipeBookData.armors;
+        }
     }
 
     /**

@@ -6,6 +6,7 @@ abstract class Scene_CraftBase extends Scene_MenuBase
 {
 
     protected _crafting: Game_Crafting;
+    protected abstract _id: number;
 
     protected constructor()
     {
@@ -16,7 +17,6 @@ abstract class Scene_CraftBase extends Scene_MenuBase
     {
         super.initialize();
         this._crafting = new Game_Crafting();
-
     }
 
     public create()

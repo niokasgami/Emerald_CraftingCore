@@ -1,5 +1,6 @@
 import {Config} from "./core/common";
 
-Config.init();
+export * from "./Globals";
 export * from "./core";
 export * from "./objects";
+Config.init();

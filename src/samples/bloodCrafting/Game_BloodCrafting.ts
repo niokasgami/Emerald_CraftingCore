@@ -45,11 +45,13 @@ class Game_BloodCrafting extends Game_Crafting
     public canCraft(id: number, actorIndex: number): boolean
     {
         const {conditions} = this._bloodRecipes[id];
+
         return conditions.every((condition) =>
         {
             const stat = this.fetchStatData(condition.type, actorIndex);
             return stat > condition.cost;
         });
+
     }
 
     public fetchStatData(type: BloodCraftingType, id: number): number
@@ -68,6 +70,7 @@ class Game_BloodCrafting extends Game_Crafting
     public onCraft(id: number, actorId)
     {
         const {conditions} = this._bloodRecipes[id];
+
         for (let i = 0; i < conditions.length; i++)
         {
             const actor = this.actor(actorId);
